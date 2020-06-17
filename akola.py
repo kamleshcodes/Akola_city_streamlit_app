@@ -94,5 +94,5 @@ infected=data_case.Infected-data_case.Infected.shift()
 st.line_chart(infected)
 
 st.markdown("#### Stay safe, stay home 🧴🤲😷")
-st.markdown("Suggestions are always welcome. Mail me here : [:email:](sawadekarkamlesh@gmail.com)")
+st.markdown("Suggestions are always welcome. Mail me here : [:email:](mailto:sawadekarkamlesh@gmail.com)")
 st.markdown("You can find me here: [LinkedIn](https://www.linkedin.com/in/kamlesh-sawadekar-298140171/)[ Facebook](https://www.facebook.com/kamlesh.sawadekar.5)")
