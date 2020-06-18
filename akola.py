@@ -9,7 +9,7 @@ DATA_URL=("Corona Akola Location.csv")
 
 st.title("🦠 Covid-19 🦠 Dashboard: Akola City")
 st.markdown("This is a Streamlit-powered dashboard, can be used to study the spread of Corona Virus in the city of Akola. The dashboard is still under research and development. Advancements will be upgraded in the earliest time possible.")
-st.markdown("*Disclaimer: The presented data does not give accurate location of infected people, but rather gives precise areas around which infected people were detected. Currently, we have the data from 16th of May. We are striving to get all the data of the city, as soon as possible. Current data is extracted from local media reports from **Yash News Network**.*")
+st.markdown("*Disclaimer: The presented data does not give accurate location of infected people, but rather gives precise areas around which infected people were detected. There might be some factual error in the data presented. If you come across such mistakes, do contact me at the handles given at the bottom of this page. Currently, we have the data from 16th of May. We are striving to get all the data of the city, as soon as possible. Current data is extracted from local media reports from **Yash News Network**.*")
 @st.cache(persist=True)
 def load_data(nrows):
     mydateparser = lambda x: pd.datetime.strptime(x, "%d-%m-%Y")
@@ -23,7 +23,7 @@ def load_data(nrows):
     return data
 
 
-data=load_data(835)
+data=load_data(836)
 data[['latitude','longitude']].to_csv('lat_long.csv', index=False)
 
 st.header("Where have been Covid-19 patients detected in Akola city?")
@@ -35,10 +35,10 @@ if choose1:
     data1.reset_index(drop=True, inplace=True)
 else:
     st.markdown("Use the slider to see the spread Covid-19 in the past.")
-    time=st.slider("Travel back in time =))", 0, 32)
+    time=st.slider("Travel back in time =))", 0, 33)
     date1 = data.date[0]
     date2= date1 + datetime.timedelta(days=time)
-    date_disp = date1 + datetime.timedelta(days=(32-time))
+    date_disp = date1 + datetime.timedelta(days=(33-time))
     st.write(date_disp)
     data1= data.loc[data['date']>=date2]
     data1.reset_index(drop=True, inplace=True)
@@ -95,4 +95,4 @@ st.line_chart(infected)
 
 st.markdown("#### Stay safe, stay home 🧴🤲😷")
 st.markdown("Suggestions are always welcome. Mail me here : [:email:](mailto:sawadekarkamlesh@gmail.com)")
-st.markdown("You can find me here: [LinkedIn](https://www.linkedin.com/in/kamlesh-sawadekar-298140171/)[ Facebook](https://www.facebook.com/kamlesh.sawadekar.5)")
+st.markdown("You can also find me here: [LinkedIn](https://www.linkedin.com/in/kamlesh-sawadekar-298140171/)|[ Facebook](https://www.facebook.com/kamlesh.sawadekar.5)")
