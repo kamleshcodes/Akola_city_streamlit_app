@@ -23,7 +23,7 @@ def load_data(nrows):
     return data
 
 
-data=load_data(836)
+data=load_data(889)
 data[['latitude','longitude']].to_csv('lat_long.csv', index=False)
 
 st.header("Where have been Covid-19 patients detected in Akola city?")
@@ -35,10 +35,10 @@ if choose1:
     data1.reset_index(drop=True, inplace=True)
 else:
     st.markdown("Use the slider to see the spread Covid-19 in the past.")
-    time=st.slider("Travel back in time =))", 0, 33)
+    time=st.slider("Travel back in time =))", 0, 34)
     date1 = data.date[0]
     date2= date1 + datetime.timedelta(days=time)
-    date_disp = date1 + datetime.timedelta(days=(33-time))
+    date_disp = date1 + datetime.timedelta(days=(34-time))
     st.write(date_disp)
     data1= data.loc[data['date']>=date2]
     data1.reset_index(drop=True, inplace=True)
@@ -60,7 +60,7 @@ st.write(pdk.Deck(
         auto_highlight=True,
         elevation_scale=5,
         pickable=True,
-        radius=100,
+        radius=80,
         elevation_range=[0, 1000],
         extruded=True,
         coverage=1
@@ -94,5 +94,6 @@ infected=data_case.Infected-data_case.Infected.shift()
 st.line_chart(infected)
 
 st.markdown("#### Stay safe, stay home 🧴🤲😷")
-st.markdown("Suggestions are always welcome. Mail me here : [:email:](mailto:sawadekarkamlesh@gmail.com)")
-st.markdown("You can also find me here: [LinkedIn](https://www.linkedin.com/in/kamlesh-sawadekar-298140171/)|[ Facebook](https://www.facebook.com/kamlesh.sawadekar.5)")
+st.markdown("##### Dashboard created by Kamlesh Sawadekar")
+st.markdown("##### Suggestions are always welcome. To Mail me, click here : [:email:](mailto:sawadekarkamlesh@gmail.com)") 
+st.markdown("##### You can also find me here: [LinkedIn ](https://www.linkedin.com/in/kamlesh-sawadekar-298140171/)|[ Facebook](https://www.facebook.com/kamlesh.sawadekar.5)")
