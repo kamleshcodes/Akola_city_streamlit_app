@@ -12,10 +12,10 @@ st.markdown("This is a Streamlit-powered dashboard, can be used to study the spr
 st.markdown("*Disclaimer: The presented data does not give accurate location of infected people, but rather gives precise areas around which infected people were detected. There might be some factual error in the data presented. If you come across such mistakes, do contact me at the handles given at the bottom of this page. Currently, we have the data from 16th of May. We are striving to get all the data of the city, as soon as possible. Current data is extracted from local media reports from **Yash News Network**.*")
 @st.cache(persist=True)
 def load_data(nrows):
-    mydateparser = lambda x: pd.datetime.strptime(x, "%d-%m-%Y")
-    data = pd.read_csv(DATA_URL, nrows=nrows, parse_dates=['Date'], date_parser=mydateparser)
+    data = pd.read_csv(DATA_URL, nrows=nrows)
     data=data.loc[data['Status']=='Infected']
     data.dropna(subset=['Latitude', 'Longitude'], inplace=True)
+    data['Date'] = pd.to_datetime(data['Date'], format="%d-%m-%Y")
     lowercase = lambda x: str(x).lower() 
     data.rename(lowercase, axis="columns", inplace=True)
     data.reset_index(drop=True, inplace=True)
@@ -23,7 +23,7 @@ def load_data(nrows):
     return data
 
 
-data=load_data(889)
+data=load_data(912)
 data[['latitude','longitude']].to_csv('lat_long.csv', index=False)
 
 st.header("Where have been Covid-19 patients detected in Akola city?")
@@ -35,10 +35,10 @@ if choose1:
     data1.reset_index(drop=True, inplace=True)
 else:
     st.markdown("Use the slider to see the spread Covid-19 in the past.")
-    time=st.slider("Travel back in time =))", 0, 34)
+    time=st.slider("Travel back in time =))", 0, 35)
     date1 = data.date[0]
     date2= date1 + datetime.timedelta(days=time)
-    date_disp = date1 + datetime.timedelta(days=(34-time))
+    date_disp = date1 + datetime.timedelta(days=(35-time))
     st.write(date_disp)
     data1= data.loc[data['date']>=date2]
     data1.reset_index(drop=True, inplace=True)
