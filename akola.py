@@ -23,7 +23,7 @@ def load_data(nrows):
     return data
 
 
-data=load_data(912)
+data=load_data(938)
 data[['latitude','longitude']].to_csv('lat_long.csv', index=False)
 
 st.header("Where have been Covid-19 patients detected in Akola city?")
@@ -35,10 +35,10 @@ if choose1:
     data1.reset_index(drop=True, inplace=True)
 else:
     st.markdown("Use the slider to see the spread Covid-19 in the past.")
-    time=st.slider("Travel back in time =))", 0, 35)
+    time=st.slider("Travel back in time =))", 0, 36)
     date1 = data.date[0]
     date2= date1 + datetime.timedelta(days=time)
-    date_disp = date1 + datetime.timedelta(days=(35-time))
+    date_disp = date1 + datetime.timedelta(days=(36-time))
     st.write(date_disp)
     data1= data.loc[data['date']>=date2]
     data1.reset_index(drop=True, inplace=True)
@@ -49,7 +49,7 @@ st.write(pdk.Deck(
     initial_view_state={
         "latitude": midpoint[0],
         "longitude": midpoint[1],
-        "zoom": 11,
+        "zoom": 11.5,
         "pitch":40.5,
     },
     layers=[
@@ -74,12 +74,42 @@ st.write(pdk.Deck(
     }
 ))
 
+
+st.markdown("### Possible Hotspots in the City")    
+st.write(pdk.Deck(
+    map_style="mapbox://styles/mapbox/dark-v9",
+    initial_view_state={
+        "latitude": midpoint[0],
+        "longitude": midpoint[1],
+        "zoom": 12,
+        "pitch":0,
+    },
+    layers=[
+        pdk.Layer(
+        'HeatmapLayer',
+        data=data1[['location','latitude', 'longitude']],
+        get_position=["longitude", "latitude"],
+        auto_highlight=True,
+        elevation_scale=5,
+        pickable=True,
+        radius=80,
+        elevation_range=[0, 1000],
+        extruded=True,
+        coverage=1
+        )
+    ],
+   
+))
+
+
 st.markdown("### Cluster Map")
 st.map(data[["latitude", "longitude"]].dropna(how="any"))
 choose2=  st.checkbox("Show Raw Data")
 if choose2:
     st.write(data)
 
+
+    
 st.header("Cumulative Infected/Recovered/Dead/Active Plot")
 data_case = pd.read_csv('Corona Akola-cases.csv')
 data_case.dropna(how='all', inplace=True)
