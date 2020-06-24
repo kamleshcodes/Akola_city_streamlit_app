@@ -23,7 +23,7 @@ def load_data(nrows):
     return data
 
 
-data=load_data(989)
+data=load_data(1053)
 data[['latitude','longitude']].to_csv('lat_long.csv', index=False)
 
 st.header("Where have been Covid-19 patients detected in Akola city?")
@@ -35,10 +35,10 @@ if choose1:
     data1.reset_index(drop=True, inplace=True)
 else:
     st.markdown("Use the slider to see the spread Covid-19 in the past.")
-    time=st.slider("Travel back in time =))", 0, 38)
+    time=st.slider("Travel back in time =))", 0, 39)
     date1 = data.date[0]
     date2= date1 + datetime.timedelta(days=time)
-    date_disp = date1 + datetime.timedelta(days=(38-time))
+    date_disp = date1 + datetime.timedelta(days=(39-time))
     st.write(date_disp)
     data1= data.loc[data['date']>=date2]
     data1.reset_index(drop=True, inplace=True)
